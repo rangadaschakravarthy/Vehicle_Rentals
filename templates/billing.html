@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billing Details</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                AU_Rides
+            </div>
+            <div class="menu">
+                <a href="/">Home</a>
+                <a href="/ride">Rides</a>
+                <a href="/rentals">Rentals</a>
+                <a href="#">Contact Us</a>
+                {% if logged_in %}
+                    <a href="/logout">Logout</a>
+                {% else %}
+                    <a href="/login">Login</a>
+                {% endif %}
+            </div>
+        </nav>
+        <div class="container">
+            <h1>Billing Details</h1>
+            <p>Date: <span id="date">{{ date }}</span></p>
+            <p>Start Time: <span id="start_time">{{ start_time }}</span></p>
+            <p>End Time: <span id="end_time">{{ end_time }}</span></p>
+            <p>Selected Model: <span id="model">{{ model }}</span></p>
+            <p>Total Duration: <span id="total_duration"></span></p>
+            <p>Price per Hour: <span id="price_per_hour"></span></p>
+            <p>Total Price: <span id="total_price"></span></p>
+            <button id="bookButton">Book</button>
+        </div>
+    </header>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var startTime = document.getElementById('start_time').textContent;
+            var endTime = document.getElementById('end_time').textContent;
+            var startTimeObj = new Date("2000-01-01T" + startTime + ":00");
+            var endTimeObj = new Date("2000-01-01T" + endTime + ":00");
+            var durationMs = endTimeObj - startTimeObj;
+            var totalHours = Math.floor(durationMs / (1000 * 60 * 60));
+            var totalMinutes = Math.floor((durationMs % (1000 * 60 * 60)) / (1000 * 60));
+            var totalDurationElement = document.getElementById('total_duration');
+            totalDurationElement.textContent = totalHours + " hours " + totalMinutes + " minutes";
+            var model = document.getElementById('model').textContent;
+            var pricePerHour=100;
+            var pricePerHourElement = document.getElementById('price_per_hour');
+            pricePerHourElement.textContent = "Rs " + pricePerHour.toFixed(2);
+            var totalPrice = totalHours * pricePerHour + (totalMinutes / 60) * pricePerHour;
+            var totalPriceElement = document.getElementById('total_price');
+            totalPriceElement.textContent = "Rs " + totalPrice.toFixed(2);
+            var bookButton = document.getElementById('bookButton');
+            bookButton.addEventListener('click', function() {
+                alert("Your rental vehicle is booked for Rs " + totalPrice.toFixed(2) + " on the date mentioned.");
+            });
+        });
+    </script>
+</body>
+</html>

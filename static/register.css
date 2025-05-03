@@ -1,0 +1,36 @@
+.container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: white;
+}
+.input-group {
+    margin-bottom: 15px;
+    position: relative;
+}
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+p {
+    margin-top: 15px;
+    text-align: center;
+}
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+#db{
+    color: white;
+}

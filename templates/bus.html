@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus Rental</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='login.css')}}">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                AU_Rides
+            </div>
+            <div class="menu">
+                <a href="/">Home</a>
+                <a href="/ride">Rides</a>
+                <a href="/rentals">Rentals</a>
+                {% if session.logged_in %}
+                    <a href="/logout">Logout</a>
+                {% else %}
+                    <a href="/login">Login</a>
+                {% endif %}
+            </div>
+        </nav>
+        <div class="container">
+            <h1>Bus Rental</h1>
+            <form action="/rentals/car" method="POST">
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" required><br><br>
+                <label for="start_time">Start Time:</label>
+                <input type="time" id="start_time" name="start_time" required><br><br>
+                <label for="end_time">End Time:</label>
+                <input type="time" id="end_time" name="end_time" required><br><br>
+                <label for="model">Select Model:</label>
+                <select id="model" name="model">
+                    <option value="select">Select</option>
+                {% for model in available_models %}
+                    <option value="{{ model }}">{{ model }}</option>
+                {% endfor %}
+                </select><br><br>
+                <button type="submit">Bill</button>
+                </form>
+        </div>
+    </header>
+</body>
+</html>

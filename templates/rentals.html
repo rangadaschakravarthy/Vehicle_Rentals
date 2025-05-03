@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rentals</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{url_for('static', filename='vehicle.css') }}">
+    <link rel="stylesheet" href="{{url_for('static', filename='login.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                AU_Rides
+            </div>
+            <div class="menu">
+                <a href="/">Home</a>
+                <a href="/ride">Rides</a>
+                <a href="/rentals">Rentals</a>
+                {% if session.logged_in %}
+                    <a href="/logout">Logout</a>
+                {% else %}
+                    <a href="/login">Login</a>
+                {% endif %}
+            </div>
+        </nav>
+        <div class="content">
+            <h1>Choose Your Vehicle</h1>
+            <div class="vehicle-options">
+                <div class="vehicle" onclick="window.location.href='/rentals/bike'">
+                    <img src="{{url_for('static', filename='photos/bike.jpeg')}}" alt="Bike">
+                    <h2>Bike</h2>
+                </div>
+                <div class="vehicle" onclick="window.location.href='/rentals/car'">
+                    <img src="{{url_for('static', filename='photos/car.jpg')}}" alt="Car">
+                    <h2>Car</h2>
+                </div>
+                <div class="vehicle" onclick="window.location.href='/rentals/bus'">
+                    <img src="{{url_for('static', filename='photos/bus.jpg')}}" alt="Bus">
+                    <h2>Bus</h2>
+                </div>
+            </div>
+        </div>
+    </header>
+</body>
+</html>

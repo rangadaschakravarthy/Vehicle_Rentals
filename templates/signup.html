@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{url_for('static', filename='login.css') }}">
+</head>
+<body>
+    <header>
+    <nav>
+        <div class="logo">
+            AU_Rides
+        </div>
+        <div class="menu">
+            <a href="/">Home</a>
+            <a href="/ride">Rides</a>
+            <a href="/rentals">Rentals</a>
+            <a href="/login">Login</a>
+        </div>
+    </nav>
+    <div class="container">
+        <h1>Sign Up</h1>
+        <form action="/signup" method="post">
+            <div class= "input-group">
+                <input type="text" name="username" placeholder="Username" required><br>
+            </div>
+            <div class= "input-group">
+                <input type="password" name="password" id="password" placeholder="Password" required>
+                <span class="icon" id="passwordToggle">
+                    <i class="fa-solid fa-eye"></i>
+                </span>
+            </div>
+            <div class= "input-group">
+                <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm Password" required>
+                <span class="icon" id="passwordToggle">
+                    <i class="fa-solid fa-eye"></i>
+                </span>
+            </div>
+            <div class= "input-group">
+                <input type="email" name="email" placeholder="Email" required><br>
+            </div>
+            <div class= "input-group">
+                <input type="text" name="contact_no" placeholder="Contact Number" required><br>
+            </div>
+            <div>
+                <button type="submit">Sign Up</button>
+            </div>
+            <p id="db">You Can Login Here <a href ="/login" id="bs">Login</a></p>
+        </form>
+    </div>
+</header>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById('password');
+            const passwordToggle = document.getElementById('passwordToggle');
+            passwordToggle.addEventListener('click', function() {
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    passwordToggle.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
+                } else {
+                    passwordInput.type = 'password';
+                    passwordToggle.innerHTML = '<i class="fa-solid fa-eye"></i>';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

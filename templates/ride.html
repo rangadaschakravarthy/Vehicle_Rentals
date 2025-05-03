@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rides</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+    <style>
+        .fare-text {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                AU_Rides
+            </div>
+            <div class="menu">
+                <a href="/">Home</a>
+                <a href="/ride">Rides</a>
+                <a href="/rentals">Rentals</a>
+                {% if session.logged_in %}
+                    <a href="/logout">Logout</a>
+                {% else %}
+                    <a href="/login">Login</a>
+                {% endif %}
+            </div>
+        </nav>
+        <div class="container">
+            <h1>Ride</h1>
+            {% if session.logged_in %}
+                <form id="rideForm">
+                    <div>
+                        <label for="source">Source Location:</label>
+                        <input type="text" id="source" name="source" required><br><br>
+                    </div>
+                    <div>
+                        <label for="destination">Destination Location:</label>
+                        <input type="text" id="destination" name="destination" required><br><br>
+                    </div>
+                    <div>
+                        <label for="vehicle">Select Vehicle:</label>
+                        <select id="vehicle" name="vehicle">
+                            <option value="auto">Auto</option>
+                            <option value="bike">Bike</option>
+                            <option value="car">Car</option>
+                        </select><br><br>
+                    </div>
+                    <button type="button" id="calculateButton">Calculate Fare</button>
+                </form>
+                <div id="fare" class="fare-text"></div>
+                <div id="booking"></div>
+            {% else %}
+                <p>Please <a href="/login">login</a> to continue.</p>
+            {% endif %}
+        </div>
+    </header>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById('calculateButton').addEventListener('click', function() {
+                var source = document.getElementById('source').value;
+                var destination = document.getElementById('destination').value;
+                var vehicle = document.getElementById('vehicle').value;
+                calculateFare(source, destination, vehicle);
+            });
+        });
+
+        function calculateFare(source, destination, vehicle) {
+            var formData = new FormData();
+            formData.append('source', source);
+            formData.append('destination', destination);
+            formData.append('vehicle', vehicle);
+
+            fetch('/calculate_fare', {
+                method: 'POST',
+                body: formData,
+                credentials: 'same-origin'
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Failed to calculate fare');
+                }
+            })
+            .then(data => {
+                if (data.fare !== null) {
+                    document.getElementById('fare').innerHTML = "<p>Fare: Rs" + data.fare + "</p>";
+                    document.getElementById('booking').innerHTML = "<button onclick='bookVehicle(\"" + vehicle + "\", " + data.fare + ")'>Book " + vehicle.charAt(0).toUpperCase() + vehicle.slice(1) + "</button>";
+                } else {
+                    document.getElementById('fare').innerHTML = "<p class='fare-text'>Service not available at this location</p>";
+                    document.getElementById('booking').innerHTML = "";
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function bookVehicle(vehicle, fare) {
+            alert("You have booked a " + vehicle + " for Rs" + fare);
+        }
+    </script>
+</body>
+</html>
