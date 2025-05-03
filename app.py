@@ -6,8 +6,8 @@ from flask_mail import Mail, Message
 app = Flask(__name__)
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'Anurag@123'
-app.config['MYSQL_DB'] = 'ttpbl'
+app.config['MYSQL_PASSWORD'] = '<your_password>'
+app.config['MYSQL_DB'] = '<db_name>'
 mysql = MySQL(app)
 
 app.secret_key = 'xyz'
@@ -15,8 +15,8 @@ app.secret_key = 'xyz'
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = '22eg112c10@anurag.edu.in' 
-app.config['MAIL_PASSWORD'] = 'Abcdefgh123'
+app.config['MAIL_USERNAME'] = '<email_id>' 
+app.config['MAIL_PASSWORD'] = '<email_password>'
 app.config['MAIL_DEBUG'] =True
 mail = Mail(app)
 
@@ -59,7 +59,7 @@ def signup():
         mysql.connection.commit()
         cur.close()
         msg = Message('Welcome to our Website',
-                      sender='22eg112c10@anurag.edu.in',
+                      sender='<email>',
                       recipients=[email])
         msg.body = 'Thank you for signing up for our website!'
         mail.send(msg)
